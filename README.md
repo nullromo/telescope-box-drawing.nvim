@@ -32,11 +32,46 @@ symbols. Or just use the extension.
 
 ## 🥡 Installation
 
-TODO
+With Lazy.nvim, use this plugin as a dependency for Telescope.
+
+```lua
+{
+    'nvim-telescope/telescope.nvim',
+    dependencies = {
+        'nullromo/telescope-box-drawing.nvim',
+    },
+}
+```
+
+You can load the extension like this:
+
+```lua
+local telescope = require('telescope')
+telescope.load_extension('box-drawing')
+```
+
+Once it's loaded, you can call it like this:
+
+```lua
+telescope.extensions['box-drawing']['box-drawing']()
+```
+
+Or you can simply use `:Telescope box-drawing` (with <kbd>Tab</kbd> completion).
 
 ## 🧃 Configuration
 
-TODO
+I recommend using the `cursor` theme provided by Telescope. To set this up, you
+can create a user command like this:
+
+```lua
+vim.api.nvim_create_user_command('BoxDrawing', function()
+    telescope.extensions['box-drawing']['box-drawing'](
+        require('telescope.themes').get_cursor({
+            layout_config = { height = 20, width = 40 },
+        })
+    )
+end, { desc = 'telescope box drawing characters' })
+```
 
 ## 🧰 License, Contributing, etc.
 
