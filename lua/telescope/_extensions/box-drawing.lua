@@ -1,11 +1,17 @@
 local boxDrawing = require('box-drawing')
 local telescope = require('telescope')
 
+-- cache the config from the setup
+local extensionConfig = {}
+
 return telescope.register_extension({
     setup = function(ext_config, config)
-        -- nothing to set up
+        extensionConfig = ext_config
     end,
     exports = {
-        ['box-drawing'] = boxDrawing.pickBoxDrawingSymbol,
+        ['box-drawing'] = function()
+            -- use cached config
+            boxDrawing.pickBoxDrawingSymbol(extensionConfig)
+        end,
     },
 })
