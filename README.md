@@ -60,13 +60,36 @@ Or you can simply use `:Telescope box-drawing` (with <kbd>Tab</kbd> completion).
 
 ## 🧃 Configuration
 
+### Setting Default Options
+
 I recommend using the `cursor` theme provided by Telescope. To set this up, you
-can create a user command like this:
+can set the options like this in your Telescope setup.
 
 ```lua
+local telescope = require('telescope')
+local telescopeThemes = require('telescope.themes')
+
+telescope.setup({
+    extensions = {
+        ['box-drawing'] = telescopeThemes.get_cursor({
+            layout_config = { height = 20, width = 40 },
+        }),
+    }
+})
+```
+
+This config will automatically be passed into the picker every time you call it.
+
+### Defining a User Command
+
+You can also create a dedicated user command like this:
+
+```lua
+local telescopeThemes = require('telescope.themes')
+
 vim.api.nvim_create_user_command('BoxDrawing', function()
     telescope.extensions['box-drawing']['box-drawing'](
-        require('telescope.themes').get_cursor({
+        telescopeThemes.get_cursor({
             layout_config = { height = 20, width = 40 },
         })
     )
